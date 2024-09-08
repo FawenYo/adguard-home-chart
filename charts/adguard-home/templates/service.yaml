@@ -1,0 +1,58 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "adguard-home.fullname" . }}
+  labels:
+    {{- include "adguard-home.labels" . | nindent 4 }}
+  annotations:
+    external-dns.alpha.kubernetes.io/target: 
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: 3000
+      targetPort: api
+      protocol: TCP
+      name: api
+    - port: 443
+      targetPort: https
+      protocol: TCP
+      name: https
+  selector:
+    {{- include "adguard-home.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "adguard-home.fullname" . }}-exporter
+  labels:
+    app: exporter
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.exporter.port }}
+      targetPort: metrics
+      protocol: TCP
+      name: metrics
+  selector:
+    {{- include "adguard-home.selectorLabels" . | nindent 4 }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "adguard-home.fullname" . }}-lb
+  labels:
+    app: exporter
+spec:
+  type: LoadBalancer
+  loadBalancerIP: 192.168.31.213
+  ports:
+    - port: 53
+      targetPort: dns-tcp
+      protocol: TCP
+      name: dns-tcp
+    - port: 53
+      targetPort: dns-udp
+      protocol: UDP
+      name: dns-udp
+  selector:
+    {{- include "adguard-home.selectorLabels" . | nindent 4 }}

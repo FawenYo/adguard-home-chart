@@ -1,0 +1,6 @@
+bind_host: 0.0.0.0
+bind_port: 3000
+auth_name: {{ .Values.auth.name | quote }}
+auth_pass: {{ .Values.auth.password | quote }}
+rlimit_nofile: 0
+rlimit_nproc: 0
