@@ -4,8 +4,6 @@ metadata:
   name: {{ include "adguard-home.fullname" . }}
   labels:
     {{- include "adguard-home.labels" . | nindent 4 }}
-  annotations:
-    external-dns.alpha.kubernetes.io/target: 
 spec:
   type: {{ .Values.service.type }}
   ports:
