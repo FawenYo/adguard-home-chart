@@ -81,8 +81,12 @@ auth:
   password: password
 
 persistence:
-  size: 1Gi
-  storageClass: ""
+  work:
+    size: 1Gi
+    storageClass: ""
+  config:
+    size: 1Gi
+    storageClass: ""
 
 exporter:
   port: 9618

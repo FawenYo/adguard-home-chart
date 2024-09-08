@@ -7,8 +7,8 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: {{ .Values.persistence.size }}
-  storageClassName: {{ .Values.persistence.storageClass }}
+      storage: {{ .Values.persistence.work.size }}
+  storageClassName: {{ .Values.persistence.work.storageClass }}
   {{- if (lookup "v1" "PersistentVolumeClaim" "{{ .Release.Namespace }}" "{{ include 'adguard-home.fullname' . }}-work") }}
   volumeName: {{ (lookup "v1" "PersistentVolumeClaim" "{{ .Release.Namespace }}" "{{ include 'adguard-home.fullname' . }}-work").spec.volumeName }}
   {{- end }}
@@ -22,8 +22,8 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: {{ .Values.persistence.size }}
-  storageClassName: {{ .Values.persistence.storageClass }}
+      storage: {{ .Values.persistence.config.size }}
+  storageClassName: {{ .Values.persistence.config.storageClass }}
   {{- if (lookup "v1" "PersistentVolumeClaim" "{{ .Release.Namespace }}" "{{ include 'adguard-home.fullname' . }}-config") }}
   volumeName: {{ (lookup "v1" "PersistentVolumeClaim" "{{ .Release.Namespace }}" "{{ include 'adguard-home.fullname' . }}-config").spec.volumeName }}
   {{- end }}
